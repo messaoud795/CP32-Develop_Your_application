@@ -1,0 +1,31 @@
+.category {
+  display: flex;
+  list-style-type: none;
+  background-color: white;
+  justify-content: space-around;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  align-items: center;width: 100%;padding: 0;
+
+}
+.category :hover {
+  background-color: yellow ;
+
+}
+.category :focus {
+  background-color:yellow ;
+
+}
+
+
+.catLink {text-decoration: none;  color: black;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  height: fit-content;
+  align-items: center;
+  padding: 10px 0;
+}
+
+

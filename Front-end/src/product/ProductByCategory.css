@@ -1,0 +1,6 @@
+.productByCategory {padding: 20px;}
+.productByCategory > h2 {color: green;margin :20px 10px;}
+.productByCategory_items {display: flex;flex-wrap: wrap;}
+.sort{display: flex; justify-content: flex-end;
+margin: 0px 20px 10px;}
+.sort > span {padding :0 10px}
