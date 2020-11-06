@@ -9,7 +9,6 @@ function Register() {
  const [inputs , setInputs] = useState({
     firstName : "",lastName:"",address:"", email:"",password:""})
     const [errorMsg, setErrorMsg] = useState("");
-
   const history = useHistory();
  
   const register = (e) => {

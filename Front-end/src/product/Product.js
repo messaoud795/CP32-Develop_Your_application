@@ -8,18 +8,19 @@ function Product({ product }) {
   const addProduct = () => {
         dispatch({
           type: "addToBasket",
-          payload: product,
+          payload: {product: product, quantityOrdred:1},
         });
         dispatch({type:"updateTotal"});
-
   };
+
   return (
     <div className="product">
       <div className="product_info">
         <p>{product.title}</p>
         <p>{product.price + "$"}</p>
       </div>
-      <img src={product.image} alt="" />
+      <img src={`http://localhost:5000/${product.image}`} alt="" />
+
       <div className="product_description">
         <p>{product.description}</p>
       </div>

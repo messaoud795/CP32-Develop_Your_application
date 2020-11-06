@@ -8,7 +8,7 @@ import Register from "./auth/Register";
 import Order from "./Order";
 import ProductByCategory from "./product/ProductByCategory";
 import SearchProduct from "./product/SearchProduct";
-import OrderTracking from "./OrderTracking"
+import OrderTracking from "./OrderTracking";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,11 +16,14 @@ import {
   Redirect,
 } from "react-router-dom";
 import Category from "./Category";
+import LoginAdmin from "./admin/LoginAdmin";
+import CreateProduct from "./admin/CreateProduct";
+import OrdersManagement from './admin/OrdersManagement'
 
 function App() {
   function SecureRoute(props) {
     let token = window.localStorage.getItem("token");
-  return (
+    return (
       <Route
         path={props.path}
         render={() => {
@@ -30,18 +33,19 @@ function App() {
       ></Route>
     );
   }
-   function ConnectRoute(props) { 
+  function ConnectRoute(props) {
     let token = window.localStorage.getItem("token");
     return (
       <Route
         path={props.path}
-         render={() => {
+        render={() => {
           if (token) {
-            console.log("heyyy")
             window.localStorage.removeItem("token");
-    window.localStorage.removeItem("firstName");
-    return <Redirect to={{ pathname: "/" }} />}
-          else  {return <props.component />};
+            window.localStorage.removeItem("firstName");
+            return <Redirect to={{ pathname: "/" }} />;
+          } else {
+            return <props.component />;
+          }
         }}
       ></Route>
     );
@@ -51,15 +55,16 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/admin" exact component={LoginAdmin} />
+          <Route path="/admin/product" exact component={CreateProduct} />
           <Route path="/checkout">
             <Header />
             <Checkout />
           </Route>
           <ConnectRoute path="/login" exact component={Login}></ConnectRoute>
 
-          <SecureRoute
-            path="/order" exact component={Order}
-          />
+          <SecureRoute path="/order" exact component={Order} />
+          <SecureRoute path="/admin/orders" exact component={OrdersManagement} />
           <Route path="/register">
             <Register />
           </Route>
@@ -69,7 +74,7 @@ function App() {
           </Route>
           <Route path="/:cat" exact>
             <Header />
-            <Category/>
+            <Category />
             <ProductByCategory />
           </Route>
           <Route path="/search/:id" exact>

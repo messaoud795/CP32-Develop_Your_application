@@ -1,0 +1,6 @@
+.headeroption_add{
+    display: flex;color: black;
+}
+.createProduct_list{padding:20px}
+.createProduct_list > h2 {padding:0 0 20px 10px}
+.add{display: flex;justify-content: flex-end;margin: 20px 50px 10px;height: 40px;}

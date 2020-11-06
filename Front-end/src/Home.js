@@ -12,13 +12,14 @@ function Home() {
   const[products,setProducts]=useState([]);
 
   useEffect(()=>{
-    axios.get('/api/product/')
-     .then (res=>{setProducts ((res.data))})
+    axios.get('/api/product/home')
+     .then (res=>{setProducts (res.data)
+ })
      .catch(err=>{setError(err);
       console.log(error)});
 // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
-
+    console.log(products)
     return (
         <div className="home">
          <Category/>

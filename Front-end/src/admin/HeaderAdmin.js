@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./Header.css";
+import '../Header.css'
 import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
 
-function Header() {
-  var { basket } = useSelector((state) => ({ ...state.basketReducer }));
+
+
+function HeaderAdmin() {
   var userFistName  = window.localStorage.getItem("firstName");
   const [searchInput, setsearchInput] = useState("");
   const [connect, setConnect] = useState('')
   var history = useHistory();
  
-
-
-//save basket to local storage
-  useEffect(() => {
-    window.localStorage.setItem("basketStored", JSON.stringify(basket));
-  }, [basket]);
 //switch to sign in and out 
   useEffect(() => {
     userFistName ? setConnect("Sign out"):setConnect("Sign in")
@@ -30,7 +22,8 @@ function Header() {
     setsearchInput("");
   };
 
-  
+
+
 
 
   return (
@@ -61,32 +54,19 @@ function Header() {
       </div>
 
       <div className="header_nav">
-        {/* Name of the user connected */}
-        <div className="header_link" >
-          {userFistName && <div className="header_option">
-            <span className="hearder_optionLineTwo">Welcome </span>
-            <span className="hearder_optionLineTwo"> { userFistName}</span>
-            </div>}
         </div>
-
-        {/*Basket*/}
-        <Link to="/checkout" className="header_link" >
-          <div className="header_optionBasket">
-            {/* basket icon with a number */}
-            <span>{basket.length}</span>
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              className="shopping_basket_logo"
-            />
-          </div>
-        </Link>
-
+            
         {/* Order */}
-        <Link to="/order" className="header_link">
+        <Link to="/admin/orders" className="header_link">
           <div className="header_option">
-            <span className="hearder_optionLineTwo">Orders</span>
+            <span className="hearder_optionLineTwo">Orders Management</span>
           </div>
         </Link>
+          {/* Name of the user connected */}
+          <div className="header_link" >
+          {userFistName && <div className="header_option">
+            <span className="hearder_optionLineTwo"> {"Welcome " + userFistName}</span>
+            </div>}
         {/* Sign In and out */}
         <Link to="/login" className="header_link">
           <div className="header_option">
@@ -98,4 +78,5 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderAdmin;
+

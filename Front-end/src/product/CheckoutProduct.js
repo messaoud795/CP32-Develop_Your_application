@@ -1,18 +1,23 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect} from "react";
 import "./CheckoutProduct.css";
 import { useDispatch , useSelector} from "react-redux";
 
 
-function CheckoutProduct({ productSelected }) {
+function CheckoutProduct({ productSelected, quantityOrdred }) {
   var { basket } = useSelector((state) => ({ ...state.basketReducer }));
-  const [quantity, setQuantity] = useState(productSelected.quantityOrdred);
+  const [quantity, setQuantity] = useState(quantityOrdred);
   var dispatch = useDispatch();
   useEffect(() => {
-    productSelected.quantityOrdred=quantity;
+for(let i in basket){
+  if (basket[i].product.title===productSelected.title){
+    basket[i].quantityOrdred=quantity
+  }
+}
     window.localStorage.setItem('basketStored',JSON.stringify(basket))
     dispatch({type:"updateTotal"});
-// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quantity])
+  }  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  , [quantity])
   return (
     <div className="checkoutproduct">
       <img className="chekoutproduct_img" src={productSelected.image} alt="" />
@@ -24,11 +29,11 @@ function CheckoutProduct({ productSelected }) {
           <span>Quantity</span>
           <input
             type="number"
-            id="Quantity"
-            value={productSelected.quantityOrdred}
+            id="Quantity" 
+            value={quantity}
             min="1"
-            max="20" 
-            onChange={(e) => { if (((e.target.value)>=1)&&((e.target.value)<=20))
+            max={productSelected.stock} 
+            onChange={(e) => { if (((e.target.value)>=1)&&((e.target.value)<=productSelected.stock))
               setQuantity(e.target.value)}}
           />  
 

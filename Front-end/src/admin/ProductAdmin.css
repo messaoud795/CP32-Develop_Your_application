@@ -1,0 +1,9 @@
+.productOperations {
+  display: none;
+}
+.product:hover  .productOperations {
+    display: flex;
+    justify-content: flex-end !important;
+    color: gray;
+    width: 100%;
+    margin-bottom: 10px;cursor: pointer;}
