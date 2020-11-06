@@ -2,7 +2,7 @@ const mongoose=require("mongoose");
 const Schema = mongoose.Schema;
 
 const basketSchema=mongoose.Schema({
-    products:[Schema.Types.ObjectId],
+    productsSelected:[{product:{type:Schema.Types.ObjectId, ref:'product'}, quantityOrdred:{type:Number}}],
     time:{type : String, required :true}
  
 });

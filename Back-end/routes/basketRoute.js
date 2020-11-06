@@ -1,26 +1,27 @@
 const express = require("express");
 const basket = require("../models/basketModel");
+const user = require("../models/userModel");
+const auth=require("../middleware/auth")
+var ObjectID = require('mongodb').ObjectID;
 const router = express.Router();
 
 
 //create a basket for a connected user
-router.post("/", async(req, res) => {
-    console.log("axios received")
-
+router.post("/", auth, (req, res) => {
+//create and save the new basket
 const newBasket = new basket({time:req.body.time})
-newBasket.products.push(...req.body.basket);
+console.log(...req.body.basket)
+newBasket.productsSelected.push(...req.body.basket);
 newBasket.save((err, data) => {
     if (err) {
       console.log(error);
     } else {
-        console.log(data)
       res.send({msg:"Succesfully added"});}})
+//add the basket created to the user
+user.updateOne({"_id":ObjectID(req.userData.userId)},
+{ $set :{"basketId":newBasket.id}}, {upsert: true},(err)=>
+err? console.log(err):console.log("successfully updated"));
 })
-
-
-//display the list of users in the server cmd
-basket.find((err, data) => (err ? console.log(err) : console.log(data)));
-
 
 module.exports = router;
 
