@@ -1,0 +1,7 @@
+.orderUpdate_content{padding: 20px;}
+
+.orderUpdate_details{display: flex;align-items: center;justify-content: space-around;margin-bottom: 40px;}
+.orderUpdate_details > h2 { color: green;}
+.orderUpdate_details > button{height: 40px;width: 150px;}
+.orderUpdate_client{display: flex;margin-top: 20px;}
+.orderUpdate_client > span{margin: 0 20px}

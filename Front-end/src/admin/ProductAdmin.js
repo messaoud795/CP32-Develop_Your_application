@@ -61,7 +61,8 @@ function ProductAdmin({ product, updateProducts }) {
         <ConfirmModal
           open={openDelete}
           handleOpen={handleOpendelete}
-          deleteConfirm={deleteConfirm}
+          Confirm={deleteConfirm}
+          text={"Please confirm to delete this product"}
         />
       </div>
       <div className="product_info">

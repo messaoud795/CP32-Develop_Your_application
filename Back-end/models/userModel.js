@@ -6,7 +6,7 @@ const userSchema=mongoose.Schema({
     address:{ type : String, required :true},
     email: { type : String, required :true, unique:true},
     password : { type : String, required :true},
-    basketId: [mongoose.Schema.Types.ObjectId],
+    basketId: {type:mongoose.Schema.Types.ObjectId, ref:'basket'},
     orderId: [{type:mongoose.Schema.Types.ObjectId, ref:'order'}]
 });
 

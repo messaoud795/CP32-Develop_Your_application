@@ -1,13 +1,13 @@
 .category {
-  display: flex;
+  display: flex;   align-items: center;
+
+ justify-content: space-around;
   list-style-type: none;
   background-color: white;
-  justify-content: space-around;
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
-  align-items: center;width: 100%;padding: 0;
-
+  width: 100%;padding: 0;
 }
 .category :hover {
   background-color: yellow ;
@@ -29,3 +29,13 @@
 }
 
 
+/* @media screen and (max-width : 800px){
+  .category{
+    font-size: 15px;
+  }
+} */
+@media screen and (max-width : 500px){
+  .category{
+    font-size: 10px !important ;
+  }
+}

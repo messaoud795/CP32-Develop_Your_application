@@ -8,17 +8,19 @@ import { useHistory } from "react-router-dom";
 
 function Order() {
 var { basket, total } = useSelector((state) => ({ ...state.basketReducer }));
-  let token=  window.localStorage.getItem('token');
+let token=  window.localStorage.getItem('token');
 const history=useHistory();
+
+  
   //save order to the database 
-  function saveOrder() {
+ async function saveOrder() {
        axios.post("/api/order/create",{
          basket:basket,
          time: new Date().toLocaleString("en-GB", {timeZone: "CET"}),
          price:total},
          { headers: { Authorization: `Bearer ${token}` }})
-         .then(function(response){      
-           PopUp ("Order launched")
+         .then(  function(response){   
+           PopUp ("Order launched");
           history.push('/order/tracking')})
            .catch(function (error) {
             PopUp ("Error , please try again")})

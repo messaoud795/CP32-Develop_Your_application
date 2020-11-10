@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
 import axios from "axios";
 import "./Register.css";
+import PopUp from '../PopUp'
+import { useSelector , useDispatch} from "react-redux";
 
 function Register() {
  const [inputs , setInputs] = useState({
-    firstName : "",lastName:"",address:"", email:"",password:""})
-    const [errorMsg, setErrorMsg] = useState("");
+firstName : "",lastName:"",address:"", email:"",password:""})
+  const [errorMsg, setErrorMsg] = useState("");
+const [isValid, setisValid] = useState(false)
   const history = useHistory();
- 
+  const dispatch=useDispatch();
+ var {basket} = useSelector((state) => ({ ...state.basketReducer }));
+
   const register = (e) => {
     e.preventDefault();
     axios
@@ -19,7 +23,7 @@ function Register() {
         if (response.data.token) {
           window.localStorage.setItem('token',response.data.token);
           window.localStorage.setItem('firstName',response.data.firstName);
-          history.push("/");
+          setisValid(true) ;       
         }
         else {setErrorMsg(response.data.msg)}
       })
@@ -27,7 +31,25 @@ function Register() {
         console.log(error);
       });
   };
-
+  useEffect(()=>{  
+    if (isValid){
+    let token=localStorage.getItem('token');
+    if (basket.length>0)
+    {        console.log("hiiiiiiiiii");
+      axios.post("/api/basket",{
+     basket:basket,
+     time: new Date().toLocaleString("en-GB", {timeZone: "CET"})},
+    { headers: { Authorization: `Bearer ${token}` }})
+      .then(function(response){ 
+       console.log(response.data.productsSelected)
+       dispatch({type:'saveBasket',payload:response.data.productsSelected })
+      window.localStorage.removeItem('basketStored')
+      PopUp ("Basket Saved Successfully to your account")})
+       .catch(function (error) {
+        console.log(error) })}
+     history.push("/");} }   
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  ,[isValid])
   return (
     <div className="register">
       <Link to="/">

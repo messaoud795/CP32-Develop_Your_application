@@ -6,6 +6,8 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 import PopUp from "./PopUp";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 //create the basket state
 //initialize the basket state with the local storage
@@ -19,6 +21,7 @@ let s = i.reduce(
 
 function basketReducer(state = { basket: i, total: s }, action) {
   switch (action.type) {
+    case "saveBasket": return state={...state, basket:action.payload}
     case "addToBasket":
       if (
         state.basket.filter(

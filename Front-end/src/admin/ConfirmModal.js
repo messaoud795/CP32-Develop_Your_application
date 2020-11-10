@@ -19,7 +19,7 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 600,
+    width: 400,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
 //modal logic
 export default function ConfirmModal({
   open,
-  handleOpen, deleteConfirm})
+  handleOpen, Confirm,text})
   { function handleSubmit(e) {
       e.preventDefault();
-      deleteConfirm(true);
+      Confirm(true);
       handleOpen()
   }
   
@@ -45,9 +45,9 @@ export default function ConfirmModal({
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Please Confirm this operation </h2>
+      <h2 id="simple-modal-title">{text} </h2>
      
-        <div className="createFormButtons">
+        <div className="createFormButtons" style={{marginTop:'30px'}}>
           <button type="submit" className="create" onClick={handleSubmit}>
             confirm
           </button>

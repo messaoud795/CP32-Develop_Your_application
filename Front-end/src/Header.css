@@ -6,33 +6,45 @@
   top: 0;
   z-index: 100;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 10px 30px;
 }
 
 .header-logo {
-  width: 100px;
-  height: 60px;
-  margin: 18px 20px 0 20px;
+  max-width: 80px;
+  height: auto;
+  margin: 0 0px 10px 0px;
   border-radius: 50%;
 }
 .header_search {
-  display: flex;flex: 0.6;align-items: center;
+  display: flex;
+  align-items: center;
+}
+.header_search_form {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.header_search_form > button {
+  padding: 0;
+  background-color: transparent;
+  border: transparent;
 }
 .header_searchInput {
-  height: 12px;
+  height: 35px !important;
   padding: 10px;
   border: none;
   width: 100%;
 }
 .header_searchIcon {
   background-color: chartreuse;
-  height: 22px !important;
+  height: 35px !important;
   padding: 5px;
 }
 .header_nav {
   display: flex;
-  justify-content: space-evenly;  align-items: center;
-
+  justify-content: space-between;
+  align-items: center;
 }
 .header_link {
   color: white;
@@ -41,26 +53,41 @@
 .header_option {
   display: flex;
   flex-direction: column;
-  margin: 0 20px;text-align: center;
+  margin: 0 20px;
+  text-align: center;
 }
 .hearder_optionLineTwo {
   font-size: 18px;
   font-weight: 500;
 }
-.header_optionBasket {
+.header_Basket {
   display: flex;
-  align-items: center;flex-direction: column;  border-radius: 10px;border: white solid 2px;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  border: white solid 2px;
   padding: 2px;
+  margin-left: 30px;
+  min-width: 40px;
 }
-.header_optionBasket > span{font-weight: bold;font-size:15px ;
- color: black;
+.header_Basket > span {
+  font-weight: bold;
+  font-size: 15px;
+  color: black;
 }
 
-.shopping_basket_logo{color:white;font-size: 25px;
-}
-.header_search_form{display: flex; width: 100%;
+.shopping_basket_logo {
+  color: white;
+  font-size: 25px;
 }
 
-.header_search_form > button{padding: 0;  
-background-color: transparent;border: transparent;
+.header_userAuth {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (max-width : 500px){
+  .hearder_optionLineTwo{
+    font-size: 10px !important;
+    background-color: green;
+  }
 }

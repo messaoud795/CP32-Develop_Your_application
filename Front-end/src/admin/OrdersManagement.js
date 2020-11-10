@@ -2,77 +2,91 @@ import React, { useEffect, useState } from "react";
 import HeaderAdmin from "./HeaderAdmin";
 import axios from "axios";
 import "../Order.css";
+import { useHistory } from "react-router-dom";
 
 function OrdersManagement() {
   const [orderList, setorderList] = useState([]);
   let token = window.localStorage.getItem("token");
+  const history = useHistory();
+  //get the list of orders and users
   useEffect(() => {
     axios
       .get("/api/order/management", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        res.data.forEach((el) =>
-          el.orderId.forEach(
-            (order) => (order._id = order._id.substring(16, 24))
-          )
-        );
         setorderList(res.data.reverse());
       })
       .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(orderList);
-
-  // function getStatus(orderList) {
-  // let status=orderList.map((user)=>user.orderId.map( (order)=>order.status.filter(stat=>stat.time.length>4)));
-
-  //    return
-
-  // }
-  console.log(
-    orderList.map((user) =>
-      user.orderId.map((order) => order.status.map((stat) => stat.time))
-    )
-  );
-  // .map((stat)=>stat.time ))
+  //get the latest status of an order
+  function getStatus(order) {
+    let stat = order.status.filter((el) => el.time.length > 2);
+    return (
+      stat[stat.length - 1].description + " in " + stat[stat.length - 1].time
+    );
+  }
 
   return (
     <div>
       <HeaderAdmin />
+      <h2>Customers and orders : </h2>
       <table className="order_table">
-        <tbody>
+        <thead>
           <tr key={0}>
             <th>Customer Name</th>
             <th>OrderId</th>
-            <th>created</th>
-            <th>Shipped</th>
-            <th>Delivered</th>
-            <th>Closed</th>
+            <th>Total price</th>
+            <th>status</th>
           </tr>
-          {orderList.map((user, j) => {
+        </thead>
+        <tbody>
+          {orderList.map((user) => {
             return (
-              <table>
-                <tbody>
-                  <tr key={j}>
-                    <td>{user.firstName + " " + user.lastName}</td>
-                   
-                      {user.orderId.map((order, i) => (
-                            <tr key={i}>
-                              <td>{order._id}</td></tr>
-                         
+              <tr key={user._id}>
+                <td>{user.firstName + " " + user.lastName}</td>
+                <td>
+                  <table>
+                    <tbody>
+                      {user.orderId.map((order) => (
+                        <tr key={order.sid}>
+                          <td
+                            onClick={() =>
+                              history.push(`/admin/orders/${order.sid}`)
+                            }
+                          >
+                            {order.sid}
+                          </td>
+                        </tr>
                       ))}
-                    {user.orderId.map((order, j) => (
-                      <tr key={j}>
-                        {order.status.map((stat, i) => (
-                          <td key={i}>{stat.time}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tr>
-                </tbody>
-              </table>
+                    </tbody>
+                  </table>
+                </td>
+                <td>
+                  <table>
+                    <tbody>
+                      {user.orderId.map((order) => (
+                        <tr key={order.sid}>
+                          <td>{order.price}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </td>
+                <td>
+                  <table>
+                    <tbody>
+                      {user.orderId.map((order) => (
+                        <tr key={order.sid}>
+                          <td>{getStatus(order)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
             );
           })}
         </tbody>

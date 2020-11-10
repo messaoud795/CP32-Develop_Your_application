@@ -19,7 +19,6 @@ function Home() {
       console.log(error)});
 // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
-    console.log(products)
     return (
         <div className="home">
          <Category/>

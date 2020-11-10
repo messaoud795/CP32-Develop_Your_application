@@ -51,11 +51,10 @@ router.post("/signIn", async (req, res) => {
         { userId: signInUser._id, userEmail: signInUser.email },
         "supersecret"
       );
-      console.log(token)
       } catch (error) {
         console.log(error)
       }
-     
+     console.log(("logged in"))
       res.send({
         id: signInUser._id,
         firstName: signInUser.firstName,
@@ -114,11 +113,10 @@ router.post("/admin", async (req, res) => {
         { userId: signInUser._id, userEmail: signInUser.email },
         "supersecret"
       );
-      console.log(token)
       } catch (error) {
         console.log(error)
       }
-     
+     console.log('logged in')
       res.send({
         id: signInUser._id,
         firstName: signInUser.firstName,

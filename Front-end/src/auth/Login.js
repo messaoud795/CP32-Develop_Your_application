@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import PopUp from '../PopUp'
+import { useSelector , useDispatch} from "react-redux";
+
+
 
 import "./Login.css";
+import { useEffect } from "react";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState(" ");
+  const [isValid, setisValid] = useState(false)
+  var {basket} = useSelector((state) => ({ ...state.basketReducer }));
+const dispatch=useDispatch();
  const history=useHistory();
-
+ 
   const login = (e) => {
     e.preventDefault();
     axios
@@ -22,16 +30,36 @@ function Login() {
       if (response.data.id) {
         window.localStorage.setItem('token',response.data.token);
         window.localStorage.setItem('firstName',response.data.firstName);
-        history.push("/");
+        setisValid(true)   
       }
       else{setErrorMsg(response.data.msg) }
-
-
     })
     .catch(function (error) {
       console.log(error);
     });
 };
+useEffect(()=>{  
+  if (isValid){let token=localStorage.getItem('token');
+  if (basket.length>0)
+  { axios.post("/api/basket",{
+         basket:basket,
+         time: new Date().toLocaleString("en-GB", {timeZone: "CET"})},
+         { headers: { Authorization: `Bearer ${token}` }})
+         .then(function(response){
+             console.log(response.data.productsSelected)
+             dispatch({type:'saveBasket',payload:response.data.productsSelected })
+             window.localStorage.removeItem('basketStored')
+            PopUp ("Basket Saved Successfully to your account")})
+           .catch(function (error) {
+            console.log(error) })}
+  else{axios.get("/api/basket", { headers: { Authorization: `Bearer ${token}` }}).then((response)=>{
+    dispatch({type:'saveBasket',payload:response.data.basketId.productsSelected })})
+    .catch(function (error) {
+    console.log (error)})
+}
+   history.push("/");} }   
+// eslint-disable-next-line react-hooks/exhaustive-deps    
+,[isValid])
 
   return (
     <div className="login">

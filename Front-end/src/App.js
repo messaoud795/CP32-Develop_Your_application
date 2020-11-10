@@ -19,6 +19,7 @@ import Category from "./Category";
 import LoginAdmin from "./admin/LoginAdmin";
 import CreateProduct from "./admin/CreateProduct";
 import OrdersManagement from './admin/OrdersManagement'
+import OrderUpdate from './admin/OrderUpdate'
 
 function App() {
   function SecureRoute(props) {
@@ -42,6 +43,7 @@ function App() {
           if (token) {
             window.localStorage.removeItem("token");
             window.localStorage.removeItem("firstName");
+            window.localStorage.removeItem('basketStored')
             return <Redirect to={{ pathname: "/" }} />;
           } else {
             return <props.component />;
@@ -62,9 +64,11 @@ function App() {
             <Checkout />
           </Route>
           <ConnectRoute path="/login" exact component={Login}></ConnectRoute>
-
           <SecureRoute path="/order" exact component={Order} />
+          <SecureRoute path="/order/tracking" exact component={OrderTracking} />
           <SecureRoute path="/admin/orders" exact component={OrdersManagement} />
+          <SecureRoute path="/admin/orders/:orderId" exact component={OrderUpdate} />
+
           <Route path="/register">
             <Register />
           </Route>
@@ -81,10 +85,7 @@ function App() {
             <Header />
             <SearchProduct />
           </Route>
-          <Route path="/order/tracking" exact>
-            <Header></Header>
-            <OrderTracking />
-          </Route>
+     
         </Switch>
       </div>
     </Router>
