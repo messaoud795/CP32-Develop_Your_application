@@ -7,6 +7,7 @@ function CheckoutProduct({ productSelected, quantityOrdred }) {
   var { basket } = useSelector((state) => ({ ...state.basketReducer }));
   const [quantity, setQuantity] = useState(quantityOrdred);
   var dispatch = useDispatch();
+  //asign quantity ordred to the basket and update total
   useEffect(() => {
 for(let i in basket){
   if (basket[i].product.title===productSelected.title){

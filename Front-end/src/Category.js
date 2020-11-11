@@ -7,18 +7,16 @@ import {Row, Col} from 'react-bootstrap'
 
 function Category() {
   return (
-    <>
-     <Row> <ul className="category">
+       <Row  className="category">
 
         {CategoryList.map((el, i) => (  
             <Col xs={2} key={i}><Link to={`/${el}`} className='catLink' >
               
-               <li > {el}</li>
+               <span > {el}</span>
              </Link> </Col>
         
         ))}
-      </ul></Row>
-    </>
+      </Row>
   );
 }
 

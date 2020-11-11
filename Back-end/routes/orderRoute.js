@@ -17,8 +17,9 @@ newOrder.sid=(newOrder.id.substring(16, 24));
 newOrder.save();
 
 //find product that matches the ids saved from order
-product.find({"_id":{$in :newOrder.productsOrdred}}).select('title price quantityOrdred').exec((err, data)=>
-  res.send(data));
+product.find({"_id":{$in :newOrder.productsOrdred}}).select('title price quantityOrdred stock').exec((err, data)=>
+ {  console.log(data)
+    res.send(data)});
 //add  created orderId to the user
 user.updateOne({"_id":ObjectID(req.userData.userId)},
 { $push :{"orderId":newOrder.id}}, {upsert: true},(err)=>

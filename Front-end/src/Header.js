@@ -53,10 +53,10 @@ function Header() {
             </button>
           </form>
         </Col>
-        <Col xs={{span:8, order : 2}} md={{span:6 , order : 1}} className="header_nav">
-          <Row >
+        <Col xs={{span:8, order : 2}} md={{span:6 , order : 1}} >
+          <Row className="header_nav">
             {/*Basket*/}
-            <Col xs={3}>
+            <Col xs={3} md={2}>
               <Link to="/checkout" className="header_Basket">
                 {/* basket icon with a number */}
                 <span>{basket.length}</span>
@@ -67,13 +67,13 @@ function Header() {
               </Link>
             </Col>
             {/* Order */}
-            <Col xs={3} className="header_option">
+            <Col xs={3}  md={3} className="header_option">
               <Link to="/order/tracking" className="header_link">
                 <span className="hearder_optionLineTwo">Orders Tracking</span>
               </Link>
             </Col>
             {/* Sign In and out */}
-            <Col xs={3} className="header_userAuth">
+            <Col xs={3} md={3}  className="header_userAuth">
               {/* Name of the user connected */}
               <div className="header_link">
                 {userFistName && (

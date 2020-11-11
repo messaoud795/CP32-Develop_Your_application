@@ -1,1 +1,4 @@
-*{margin: 0;}
+*{margin: 0;  
+      background-image: linear-gradient(to right top, #62d9ed, #7cd3df, #90ccd2, #a0c5c7, #aebebe);
+    }
+

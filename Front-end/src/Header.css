@@ -43,8 +43,9 @@
 }
 .header_nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  margin-bottom: 10px;
 }
 .header_link {
   color: white;
@@ -53,13 +54,18 @@
 .header_option {
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
   text-align: center;
+  min-width: 40px;
 }
 .hearder_optionLineTwo {
   font-size: 18px;
   font-weight: 500;
 }
+
+.header_nav :hover { color: black!important;
+text-decoration: none !important;
+}
+
 .header_Basket {
   display: flex;
   align-items: center;
@@ -67,8 +73,8 @@
   border-radius: 10px;
   border: white solid 2px;
   padding: 2px;
-  margin-left: 30px;
   min-width: 40px;
+  max-width: 60px;
 }
 .header_Basket > span {
   font-weight: bold;
@@ -87,7 +93,7 @@
 }
 @media screen and (max-width : 500px){
   .hearder_optionLineTwo{
-    font-size: 10px !important;
-    background-color: green;
+    font-size: 15px !important;
   }
+  .header{padding: 8px !important;}
 }

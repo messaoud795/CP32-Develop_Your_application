@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Product.css";
 import { useDispatch } from "react-redux";
 
 
 function Product({ product }) {
+  const [stockText, setStockText] = useState("")
   var dispatch = useDispatch();
+useEffect(()=>{
+product.stock>0? setStockText("In stock"):setStockText("Not available")
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[])
+
+
   const addProduct = () => {
         dispatch({
           type: "addToBasket",
@@ -12,6 +19,7 @@ function Product({ product }) {
         });
         dispatch({type:"updateTotal"});
   };
+
 
   return (
     <div className="product">
@@ -24,6 +32,7 @@ function Product({ product }) {
       <div className="product_description">
         <p>{product.description}</p>
       </div>
+      <div className="product_stock"><span>{stockText}</span></div>
       <button onClick={addProduct}>Add to basket </button>
     </div>
   );

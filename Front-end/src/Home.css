@@ -2,12 +2,12 @@
     width: 100%;height:auto;
 }
 .home{
-    max-width: 1500px;
-    margin-left: auto;margin-right: auto;
-}
+    /* width: 100% !important; */
+    /* margin-left: auto;margin-right: auto; */
+    background-image: linear-gradient(to right top, #62d9ed, #7cd3df, #90ccd2, #a0c5c7, #aebebe);}
 .home_row{
     display: flex;
     z-index: 1;
-    margin-left: 5px;
-    margin-right: 5px;flex-wrap: wrap;
+    padding: 20px;
+    flex-wrap: wrap;
 }

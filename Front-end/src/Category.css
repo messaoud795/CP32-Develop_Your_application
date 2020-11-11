@@ -1,6 +1,6 @@
 .category {
   display: flex;   align-items: center;
-
+z-index: 5;
  justify-content: space-around;
   list-style-type: none;
   background-color: white;
@@ -11,6 +11,7 @@
 }
 .category :hover {
   background-color: yellow ;
+  text-decoration: none;
 
 }
 .category :focus {
