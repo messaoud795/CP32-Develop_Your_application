@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import HeaderAdmin from "./HeaderAdmin";
 import axios from "axios";
-import "../Order.css";
+import "./OrdersManagement.css"
 import { useHistory } from "react-router-dom";
 
 function OrdersManagement() {
   const [orderList, setorderList] = useState([]);
-  let token = window.localStorage.getItem("token");
+  let tokenAdmin = window.localStorage.getItem("tokenAdmin");
   const history = useHistory();
   //get the list of orders and users
   useEffect(() => {
     axios
       .get("/api/order/management", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${tokenAdmin}` },
       })
       .then((res) => {
         setorderList(res.data.reverse());
@@ -32,6 +32,8 @@ function OrdersManagement() {
   return (
     <div>
       <HeaderAdmin />
+          <div className='orderManagement'>
+
       <h2>Customers and orders : </h2>
       <table className="order_table">
         <thead>
@@ -48,11 +50,11 @@ function OrdersManagement() {
               <tr key={user._id}>
                 <td>{user.firstName + " " + user.lastName}</td>
                 <td>
-                  <table>
+                  <table className="orderManagement_detailsTable">
                     <tbody>
                       {user.orderId.map((order) => (
                         <tr key={order.sid}>
-                          <td
+                          <td id="order_sid"
                             onClick={() =>
                               history.push(`/admin/orders/${order.sid}`)
                             }
@@ -65,7 +67,7 @@ function OrdersManagement() {
                   </table>
                 </td>
                 <td>
-                  <table>
+                  <table className="orderManagement_detailsTable">
                     <tbody>
                       {user.orderId.map((order) => (
                         <tr key={order.sid}>
@@ -76,7 +78,7 @@ function OrdersManagement() {
                   </table>
                 </td>
                 <td>
-                  <table>
+                  <table className="orderManagement_detailsTable">
                     <tbody>
                       {user.orderId.map((order) => (
                         <tr key={order.sid}>
@@ -91,7 +93,8 @@ function OrdersManagement() {
           })}
         </tbody>
       </table>
-    </div>
+    </div> </div>
+
   );
 }
 

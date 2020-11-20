@@ -12,7 +12,7 @@
     }
     .register{
         background-color: white;
-        height: 100vh;
+        min-height: 470px;
         display: flex;
         align-items: center;
         flex-direction: column;

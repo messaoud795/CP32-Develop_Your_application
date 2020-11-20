@@ -1,29 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faSignOutAlt,faSignInAlt  } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import logo from "./res/pictures/logo.jpg";
 import { Row, Col } from "react-bootstrap";
+import { useEffect } from "react";
 
 function Header() {
   var { basket } = useSelector((state) => ({ ...state.basketReducer }));
   var userFistName = window.localStorage.getItem("firstName");
   const [searchInput, setsearchInput] = useState("");
-  const [connect, setConnect] = useState("");
+  const [itemsNumber, setItemsNumber] = useState(0);
   var history = useHistory();
+//display the number of items in basket
+useEffect(()=>{
+if (basket) setItemsNumber(basket?.length)
+},[basket])
 
-  //save basket to local storage
-  useEffect(() => {
-    window.localStorage.setItem("basketStored", JSON.stringify(basket));
-  }, [basket]);
   //switch to sign in and out
-  useEffect(() => {
-    userFistName ? setConnect("Sign out") : setConnect("Sign in");
-  }, [userFistName]);
-  //search product
+function connect(userFistName) {
+  if (userFistName)return <FontAwesomeIcon
+    icon={faSignOutAlt}
+    className="shopping_basket_logo"
+  />
+    else  return <FontAwesomeIcon
+    icon={faSignInAlt}
+    className="shopping_basket_logo"
+  />;
+}
+
   const findProduct = (e) => {
     e.preventDefault();
     history.push(`/search/${searchInput}`);
@@ -53,13 +61,13 @@ function Header() {
             </button>
           </form>
         </Col>
-        <Col xs={{span:8, order : 2}} md={{span:6 , order : 1}} >
+        <Col xs={{span:10, order : 2}} md={{span:6 , order : 1}} >
           <Row className="header_nav">
             {/*Basket*/}
             <Col xs={3} md={2}>
               <Link to="/checkout" className="header_Basket">
                 {/* basket icon with a number */}
-                <span>{basket.length}</span>
+                <span>{itemsNumber}</span>
                 <FontAwesomeIcon
                   icon={faShoppingCart}
                   className="shopping_basket_logo"
@@ -69,16 +77,17 @@ function Header() {
             {/* Order */}
             <Col xs={3}  md={3} className="header_option">
               <Link to="/order/tracking" className="header_link">
-                <span className="hearder_optionLineTwo">Orders Tracking</span>
+               <span className="hearder_optionLineTwo">Order tracking</span>
+              
               </Link>
             </Col>
             {/* Sign In and out */}
-            <Col xs={3} md={3}  className="header_userAuth">
+            <Col xs={4} md={4}  className="header_userAuth">
               {/* Name of the user connected */}
               <div className="header_link">
                 {userFistName && (
                   <div className="header_option">
-                    <span className="hearder_optionLineTwo">
+                    <span className="hearder_optionLineTwo" >
                       {"Welcome  " + userFistName}
                     </span>
                   </div>
@@ -86,7 +95,7 @@ function Header() {
               </div>
               <div className="header_option">
                 <Link to="/login" className="header_link">
-                  <span className="hearder_optionLineTwo">{connect}</span>
+                <div className="hearder_optionLineTwo">{connect(userFistName)}</div>
                 </Link>
               </div>
             </Col>

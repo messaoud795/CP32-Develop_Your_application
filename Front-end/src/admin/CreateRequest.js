@@ -2,10 +2,10 @@ import Pop_up from "../PopUp";
 import axios from "axios";
 
 
-async function  CreateRequest(formData,token) {
+async function  CreateRequest(formData,tokenAdmin) {
    await axios
     .post("/api/product/create", formData, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${tokenAdmin}` },
     })
     .then(function (response) {
       if (response.data) {

@@ -30,7 +30,7 @@ function SearchProduct() {
       setproductsByCategory([...productsByCategory.sort((a, b) => a.title.localeCompare(b.title))] );
       console.log(productsByCategory);} 
     else if (method === "by price"){
-       setproductsByCategory([...productsByCategory.sort((b, a) => a.title.localeCompare(b.title))]
+       setproductsByCategory([...productsByCategory.sort((a, b) => a.price.localeCompare(b.price))]
       );
       console.log(productsByCategory);
     }

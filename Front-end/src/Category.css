@@ -8,6 +8,7 @@ z-index: 5;
   font-weight: 600;
   cursor: pointer;
   width: 100%;padding: 0;
+  margin:0 !important;
 }
 .category :hover {
   background-color: yellow ;
@@ -37,6 +38,6 @@ z-index: 5;
 } */
 @media screen and (max-width : 500px){
   .category{
-    font-size: 10px !important ;
+    font-size: 9px !important ;width: 100% !important;
   }
 }

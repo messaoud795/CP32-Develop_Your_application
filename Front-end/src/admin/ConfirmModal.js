@@ -19,7 +19,6 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -45,7 +44,7 @@ export default function ConfirmModal({
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">{text} </h2>
+      <h2 id="simple-modal-title" style={{fontSize:'20px'}}>{text} </h2>
      
         <div className="createFormButtons" style={{marginTop:'30px'}}>
           <button type="submit" className="create" onClick={handleSubmit}>

@@ -5,11 +5,13 @@ import ProductAdmin from "./ProductAdmin";
 import Category from "../Category";
 import "./CreateProduct.css";
 import SimpleModal from "./CreateForm";
-import GetProducts from'./GetProducts'
+import GetProducts from'./GetProducts';
+import {Button} from 'react-bootstrap'
 
 function CreateProduct() {
   const [products, setProducts] = useState([]);
   const [open, setOpen] =useState(false);
+  //open the modal for create and edit product
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -17,9 +19,6 @@ function CreateProduct() {
   const updateProducts = () => {
    GetProducts(setProducts)
  };
-
-
-
   //get all products from database when rendring this component
   useEffect(() => {
     GetProducts(setProducts)
@@ -35,7 +34,7 @@ function CreateProduct() {
       <HeaderAdmin />
       <Category />
       <div className="add">
-        <button onClick={handleOpen}>Add a product</button>
+        <Button variant="success" onClick={handleOpen}>Add a product</Button>
         <SimpleModal open={open} handleOpen={handleOpen}  text={"Add"} display={updateProducts}/>
       </div>
       <div className="createProduct_list">

@@ -5,6 +5,10 @@ import Product from './product/Product'
 import Category from './Category'
 import axios from 'axios';
 import flyer from './res/pictures/flyer.jpg'
+import flyer2 from './res/pictures/flyer2.jpg'
+import flyer3 from './res/pictures/flyer3.jpg'
+
+import {Carousel} from 'react-bootstrap'
 
 
 
@@ -23,8 +27,37 @@ function Home() {
     return (
         <div className="home">
          <Category />
-          <img className="home_image"
-          src={flyer} alt=""/>  
+         <div className="home_carousel">
+         <Carousel>
+  <Carousel.Item interval={1500}>
+    <img
+      className="d-block w-100 home_img"
+      src={flyer}
+      alt="First slide"
+    />
+  
+  </Carousel.Item>
+  <Carousel.Item interval={1500}>
+    <img
+      className="d-block w-100 home_img"
+      src={flyer2}
+      alt="Third slide"
+    />
+ 
+  </Carousel.Item>
+  <Carousel.Item interval={1500}>
+    <img
+      className="d-block w-100 home_img"
+      src={flyer3}
+      alt="Third slide"
+    />
+   
+  </Carousel.Item>
+</Carousel>
+         </div>
+           
+     <h2>Trending items :</h2>
+
         <div className="home_row">
           {products.map((product, i)=><Product key={i} product={product}/> )  }     
         </div>

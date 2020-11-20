@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //create the basket state
 //initialize the basket state with the local storage
 const initialValue = () =>
-  JSON.parse(window.localStorage.getItem("basketStored")) || [];
+ ( JSON.parse(window.localStorage.getItem("basketStored")) || []);
 let i = initialValue();
 let s = i.reduce(
   (sum, item) => sum + item.product.price * item.quantityOrdred,
@@ -24,39 +24,48 @@ function basketReducer(state = { basket: i, total: s }, action) {
     case "saveBasket": return state={...state, basket:action.payload}
     case "addToBasket":
       if (
-        state.basket.filter(
+        state.basket?.filter(
           (el) => el.product.title === action.payload.product.title
         ).length === 0
       ) {
+        let newBasket= [
+          ...state.basket,
+          {
+            product: action.payload.product,
+            quantityOrdred: action.payload.quantityOrdred,
+          },
+        ];
+        window.localStorage.setItem('basketStored',JSON.stringify(newBasket))
         return {
-          basket: [
-            ...state.basket,
-            {
-              product: action.payload.product,
-              quantityOrdred: action.payload.quantityOrdred,
-            },
-          ],
+          basket: newBasket,
         };
       } else {
          PopUp("Product already added to Basket");
       } 
       /* falls through */
     case "updateTotal": {
-      let S = state.basket.reduce(
+      let S = state.basket?.reduce(
         (sum, item) => sum + item.product.price * item.quantityOrdred,
         0
       );
       return { ...state, total: S }; /* falls through */
     }
     case "RemoveFromBasket":
+      let newBasket=state.basket?.filter(
+        (el) => el.product.title !== action.payload
+      );
+      window.localStorage.setItem('basketStored',JSON.stringify(newBasket))
       return {
-        basket: state.basket.filter(
-          (el) => el.product.title !== action.payload
-        ),
-      };
+        basket: newBasket
+      };/* falls through */
+      case "RemoveBasket":
+        window.localStorage.removeItem('basketStored');
+        window.location.reload();
+       return state.basket=[];/* falls through */
     default:
-      return state;
-  } /* falls through */
+      return state;/* falls through */
+  } 
+
 }
 //search product
 function searchReducer(state = { productFound: [] }, action) {
@@ -78,11 +87,10 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  ,
   document.getElementById("root")
 );
 

@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import axios from 'axios'
 import './OrderUpdate.css'
 import ConfirmModal from "./ConfirmModal";
-import Pop_up from '../PopUp'
+import Pop_up from '../PopUp';
+import {Button} from 'react-bootstrap'
 
 
 
@@ -12,10 +13,9 @@ function OrderUpdate() {
 
   const [order, setorder] = useState();
   const [customer, setCustomer]=useState()
-  let token = window.localStorage.getItem("token");
+  let tokenAdmin = window.localStorage.getItem("tokenAdmin");
   const orderSId = useParams().orderId;
   const [openUpdate, setOpenUpdateStatus] = useState(false);
-  let i=0;
   //open and close the confirm form
   const handleOpenUpdate = () => {
     setOpenUpdateStatus(!openUpdate);
@@ -24,10 +24,9 @@ function OrderUpdate() {
   useEffect(() => {
     axios
       .get(`/api/order/update/${orderSId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${tokenAdmin}` },
       })
       .then((res) => {
-     
         setorder(res.data.order);
         setCustomer(res.data.client)
       })
@@ -37,7 +36,7 @@ function OrderUpdate() {
 //display status 
 function statusDisplay(j,order){
   j=j+1;
-  if(i===1) { 
+  if(j===1) { 
 return order.status.map((stat,i)=><td key={i} rowSpan={order.productsOrdred.length}>{stat.time}</td>)}
 }
 //update status after modal confirmation
@@ -50,7 +49,7 @@ if(valid){
 //update request
 axios
     .put("/api/order/status/", order, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${tokenAdmin}` },
     })
     .then(function (response) {
       if (response.data) {Pop_up("Status updated successfully")
@@ -70,9 +69,9 @@ function updateStatus() {
         <div className='orderUpdate'> 
          < HeaderAdmin  />
          <div className="orderUpdate_content">
-    <h2>{"OrderId tracking "+orderSId}</h2>
+    <h3>{"OrderId tracking "+orderSId+" :"}</h3>
     <div className="orderUpdate_details">
-    <table className="order_table">
+    <table className="order_table orderUpdate_table">
         <tbody>
           <tr key={0}>
             <th>Product</th>
@@ -86,19 +85,19 @@ function updateStatus() {
                 </td>
                 <td>{product.quantityOrdred}</td>
                 {statusDisplay(i,order)}
-
+              
               </tr>
           )}
         </tbody>
       </table>
-<button onClick={updateStatus}>Next step</button>
+<Button variant="success" id="updateStatusBtn" onClick={updateStatus}>Next step</Button>
 <ConfirmModal
           open={openUpdate}
           handleOpen={handleOpenUpdate}
           Confirm={updateConfirm}
           text={"please confirm to update this order to next step"}
         /></div>
-  <h2>Client info :</h2>
+  <h3>Client info :</h3>
 <div className="orderUpdate_client">
         <span>{"Name : "+customer?.firstName+" "+customer?.lastName}</span>
         <span>{"Adress : "+customer?.address}</span>

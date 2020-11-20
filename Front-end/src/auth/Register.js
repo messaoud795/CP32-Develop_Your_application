@@ -35,8 +35,7 @@ const [isValid, setisValid] = useState(false)
     if (isValid){
     let token=localStorage.getItem('token');
     if (basket.length>0)
-    {        console.log("hiiiiiiiiii");
-      axios.post("/api/basket",{
+    {  axios.post("/api/basket",{
      basket:basket,
      time: new Date().toLocaleString("en-GB", {timeZone: "CET"})},
     { headers: { Authorization: `Bearer ${token}` }})

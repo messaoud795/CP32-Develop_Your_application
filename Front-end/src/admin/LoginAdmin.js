@@ -18,9 +18,9 @@ function LoginAdmin() {
       .then(function (response) {
     
         if (response.data.id) {
-          window.localStorage.setItem('token',response.data.token);
+          window.localStorage.setItem('tokenAdmin',response.data.token);
           window.localStorage.setItem('firstName',response.data.firstName);
-          history.push("/admin/products");
+          history.push("/admin/product");
         }
         else{setErrorMsg(response.data.msg) }
   

@@ -1,6 +1,7 @@
 const express = require("express");
 const product = require("../models/productModel");
 const auth = require("../middleware/auth");
+const authAdmin = require("../middleware/authAdmin");
 const fileUpload = require("../middleware/file-upload");
 const fs = require("fs");
 const router = express.Router();
@@ -16,7 +17,7 @@ const categoryList = [
 //send a product from each category to be dispalyed on home page
 router.get("/home", async (req, res) => {
   var homeProducts = [];
-  for (let i = 0; i < categoryList.length; i++) {
+  for (let i = 0; i < 4; i++) {
     let cat = categoryList[i];
     await product.findOne({ category: cat }, (err, data) => {
       if (err) {
@@ -77,7 +78,7 @@ router.get("/all", async (req, res) => {
   });
 });
 //create a product
-router.post("/create", auth, fileUpload.single("image"), async (req, res) => {
+router.post("/create", authAdmin, fileUpload.single("image"), async (req, res) => {
   const newProduct = await new product({
     title: req.body.title,
     price: req.body.price,
@@ -97,7 +98,7 @@ router.post("/create", auth, fileUpload.single("image"), async (req, res) => {
 //update a product
 router.put(
   "/update/:productId",
-  auth,
+  authAdmin,
   fileUpload.single("image"),
   async (req, res) => {
     let Id = req.params.productId;
@@ -118,7 +119,7 @@ router.put(
 //delete a product
 router.delete(
   "/delete/:productId",
-  auth,
+  authAdmin,
   fileUpload.single("image"),
   async (req, res) => {
     let Id = req.params.productId;

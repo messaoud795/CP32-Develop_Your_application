@@ -48,7 +48,7 @@ if (event.target.files && event.target.files.length===1){
       <div style={{ display:'flex', alignItems:'center'}}>
       {!previewUrl && <p>Please pick an image </p>}
       {previewUrl && <img src={previewUrl} style={{width:'120px', height:'fitContent'}} alt="Preview" />}
-      <button style={{ width:'150px', margin:'10px', height:'30px'}} onClick={pickImageHandler}>Pick an image</button></div>
+      <button style={{ width:'150px', margin:'10px', height:'auto'}} onClick={pickImageHandler}>Pick an image</button></div>
     </div>
   );
 }

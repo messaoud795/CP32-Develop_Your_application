@@ -21,9 +21,8 @@ function getModalStyle() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: "absolute",
-    width: 600,
-    backgroundColor: theme.palette.background.paper,
+   position: "absolute",
+   backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -46,7 +45,7 @@ export default function SimpleModal({
     category: "",
   });
   const [image, setimage] = useState(null);
-  let token = window.localStorage.getItem("token");
+  let tokenAdmin = window.localStorage.getItem("tokenAdmin");
 
   //get the image file
   function getFile(file) {
@@ -67,14 +66,14 @@ export default function SimpleModal({
     if (inputs.category) formData.append("category", inputs.category);
     if (image) formData.append("image", image);
     if (text === "Add") {
-      let isValid = CreateRequest(formData, token);
+      let isValid = CreateRequest(formData, tokenAdmin);
       if (isValid){
         setInputs(
           { title: "", price: "", stock: "", description: "", category: "" } 
         );display(); 
 }
     } else {
-      let isValid = EditRequest(formData, token, productId);
+      let isValid = EditRequest(formData, tokenAdmin, productId);
       if (isValid) {
         setInputs({
           title: "",

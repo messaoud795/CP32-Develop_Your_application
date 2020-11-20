@@ -9,6 +9,7 @@ import Order from "./Order";
 import ProductByCategory from "./product/ProductByCategory";
 import SearchProduct from "./product/SearchProduct";
 import OrderTracking from "./OrderTracking";
+import Footer from "./Footer";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,8 +19,11 @@ import {
 import Category from "./Category";
 import LoginAdmin from "./admin/LoginAdmin";
 import CreateProduct from "./admin/CreateProduct";
-import OrdersManagement from './admin/OrdersManagement'
-import OrderUpdate from './admin/OrderUpdate'
+import OrdersManagement from "./admin/OrdersManagement";
+import OrderUpdate from "./admin/OrderUpdate";
+import Users from "./admin/Users";
+import SaveBasketToDB from "./auth/SaveBasketToDB";
+
 
 function App() {
   function SecureRoute(props) {
@@ -34,6 +38,18 @@ function App() {
       ></Route>
     );
   }
+  function AdminRoute(props) {
+    let tokenAdmin = window.localStorage.getItem("tokenAdmin");
+    return (
+      <Route
+        path={props.path}
+        render={() => {
+          if (tokenAdmin) return <props.component />;
+          else return <Redirect to={{ pathname: "/admin" }} />;
+        }}
+      ></Route>
+    );
+  }
   function ConnectRoute(props) {
     let token = window.localStorage.getItem("token");
     return (
@@ -41,9 +57,12 @@ function App() {
         path={props.path}
         render={() => {
           if (token) {
+             SaveBasketToDB(token);
+            window.localStorage.removeItem("basketStored");
+            window.location.reload();
             window.localStorage.removeItem("token");
+            window.localStorage.removeItem("tokenAdmin");
             window.localStorage.removeItem("firstName");
-            window.localStorage.removeItem('basketStored')
             return <Redirect to={{ pathname: "/" }} />;
           } else {
             return <props.component />;
@@ -58,7 +77,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/admin" exact component={LoginAdmin} />
-          <Route path="/admin/product" exact component={CreateProduct} />
+          <AdminRoute path="/admin/product" exact component={CreateProduct} />
           <Route path="/checkout">
             <Header />
             <Checkout />
@@ -66,8 +85,13 @@ function App() {
           <ConnectRoute path="/login" exact component={Login}></ConnectRoute>
           <SecureRoute path="/order" exact component={Order} />
           <SecureRoute path="/order/tracking" exact component={OrderTracking} />
-          <SecureRoute path="/admin/orders" exact component={OrdersManagement} />
-          <SecureRoute path="/admin/orders/:orderId" exact component={OrderUpdate} />
+          <AdminRoute path="/admin/orders" exact component={OrdersManagement} />
+          <AdminRoute path="/admin/users" exact component={Users} />
+          <AdminRoute
+            path="/admin/orders/:orderId"
+            exact
+            component={OrderUpdate}
+          />
 
           <Route path="/register">
             <Register />
@@ -85,9 +109,9 @@ function App() {
             <Header />
             <SearchProduct />
           </Route>
-     
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 }

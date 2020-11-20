@@ -7,7 +7,7 @@ import axios from "axios";
 import Pop_up from "../PopUp";
 import ConfirmModal from "./ConfirmModal";
 
-const token = window.localStorage.getItem("token");
+const tokenAdmin = window.localStorage.getItem("tokenAdmin");
 
 function ProductAdmin({ product, updateProducts }) {
   const [openEdit, setOpenEdit] = useState(false);
@@ -27,7 +27,7 @@ function ProductAdmin({ product, updateProducts }) {
     if (x) {
       axios
         .delete(`/api/product/delete/${product._id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${tokenAdmin}` },
         })
         .then(function (response) {
           if (response.data) {
@@ -73,6 +73,7 @@ function ProductAdmin({ product, updateProducts }) {
 
       <div className="product_description">
         <p>{product.description}</p>
+        <p id='productAdmin_stock'>{"Stock : " +product.stock}</p>
       </div>
     </div>
   );
