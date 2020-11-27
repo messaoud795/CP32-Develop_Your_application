@@ -23,7 +23,6 @@ res.setHeader('Access-Control-Allow-Headers','Origin,X-Requested-With,Content-Ty
 next()})
 
 //DB config"mongodb://localhost:27017/shoppingDB";
-const connection_url = "mongodb+srv://nabil123:1d2a3m4m5e@cluster0.pkyyp.mongodb.net/<dbname>?retryWrites=true&w=majority";
 
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
